@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <cld-image ref="ref"  :public-id="publicId" width="1000">
+  <div>
+    <cld-image ref="ref" :public-id="publicId" width="1000">
       <cld-transformation crop="fit" effect="blur:100" />
       <cld-transformation effect="brightness_hsb:-50" />
       <cld-transformation
@@ -41,7 +41,7 @@
         class="w-full lg:w-2/5 h-10 border-[#B7B3B3] border rounded-sm p-2 mr-4"
       />
       <button
-        class="bg-gray-600 py-2 px-6 rounded-[5px] text-white font-semibold"
+        class="bg-gray-600 py-2 px-6 rounded-sm text-white font-semibold"
         @click="handleCopyToClip"
       >
         {{ copy }}
@@ -67,7 +67,6 @@ export default {
 
   methods: {
     handleCopyToClip() {
-      console.log(this.$refs)
       navigator.clipboard
         .writeText(this.url)
         .then(() => (this.copy = 'Copied!'))
@@ -76,7 +75,9 @@ export default {
   },
 
   mounted() {
-      console.log(this.$refs.ref.$el)
+    this.$nextTick(function () {
+      this.url = this.$refs.ref.$el.src
+    })
   },
 }
 </script>
